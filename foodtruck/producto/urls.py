@@ -3,7 +3,6 @@ from . import views
 
 
 urlpatterns = [
-
-    path('',views.producto , name="producto_page"),
+    path('<int:id_restaurante>/',views.producto , name="producto_page"),
     
 ]
