@@ -1,0 +1,14 @@
+{% extends 'restaurante/base.html' %}
+<!-- Nombre en la pestaña-->
+{% block title %}Inicio{% endblock %}
+<!-- Contenido-->
+{% block content %}
+<h1>Hola</h1>
+    <ul>
+        {% for restaurante in rest %}
+            <li>
+                <a href="{% url 'producto_page' restaurante.id %}">{{restaurante.name}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
