@@ -1,18 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'restaurante/base.html' %}
+<!-- Nombre en la pestaña-->
+{% block title %}{{restaurante.name}}{% endblock %}
+<!-- Contenido-->
+{% block content %}
+    
     <h1>PRODUCTOS</h1>
-    <ul>
-        {% for producto in productos %}
-            <li>    
-                {{producto.name}} - {{producto.price}}
-            </li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+    {% for producto in productos %}
+        <div class="card" style="width: 18rem;">
+            {% if producto.image  %}
+                <img class="card-img-top" src="{{producto.image.url}}" alt="Card image cap">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{producto.name}}</h5>
+                <h6 class="card-subtitle">${{producto.price}} COP</h6>
+                {% if producto.description  %}
+                    <p class="card-text">{{producto.description}}</p>
+                    {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
