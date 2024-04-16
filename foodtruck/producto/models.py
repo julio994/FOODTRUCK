@@ -12,6 +12,9 @@ class Producto(models.Model):
     id_restaurante = models.ForeignKey(Restaurante,verbose_name="Restaurante", on_delete=models.CASCADE)
     # foranea
 
+  
+
+
 
     def __str__(self) -> str:
         return self.name
