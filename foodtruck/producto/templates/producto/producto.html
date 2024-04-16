@@ -7,13 +7,12 @@
 </head>
 <body>
     <h1>PRODUCTOS</h1>
-
-
-
-
-
-    
-    {% for producto in productos reversed %}
-    {% endfor %}
+    <ul>
+        {% for producto in productos %}
+            <li>    
+                {{producto.name}} - {{producto.price}}
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
