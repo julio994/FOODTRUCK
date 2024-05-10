@@ -1,0 +1,39 @@
+{% extends 'restaurante/base.html' %}
+<!-- Nombre en la pestaña-->
+{% block title %}CLIENTES{% endblock %}
+<!-- Contenido-->
+{% block content %}
+<h1>cleintes</h1>
+
+
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">contacto</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for cliente in client %}
+        <tr> 
+            <td>{{ cliente.name }}</td>
+            <td>{{ cliente.contact}}</td>
+            <td>
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <input type="radio" name="options" id="option1" autocomplete="off" checked>Editar
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option2" autocomplete="off"> Eliminar
+                </label>
+              </div>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+        
+
+{% endblock %}
