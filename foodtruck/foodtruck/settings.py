@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'producto',
     'restaurante.apps.RestauranteConfig',
-    'cliente.apps.ClienteConfig'
+    'cliente.apps.ClienteConfig',
+    'pedido.apps.PedidoConfig'
 ]
 
 MIDDLEWARE = [
