@@ -3,12 +3,23 @@
 {% block title %}Inicio{% endblock %}
 <!-- Contenido-->
 {% block content %}
-<h1>Hola</h1>
+<h1></h1>
     <ul>
-        {% for restaurante in rest %}
-            <li>
-                <a href="{% url 'producto_page' restaurante.id %}">{{restaurante.name}}</a>
-            </li>
-        {% endfor %}
+        <div class="container-r"></div>
+            {% for restaurante in rest %}
+            
+        
+                <a href="{% url 'producto_page' restaurante.id %}">
+                    <div class="card-r">
+                        <img src="{{restaurante.image.url}}" class="card-img" alt="...">
+                        <h5 class="title-cr">{{restaurante.name}}</h5>
+                    </div>
+                </a>
+            
+       
+            {% endfor %}
+
+        </div>
+        
     </ul>
 {% endblock %}
