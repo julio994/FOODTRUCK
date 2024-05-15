@@ -6,21 +6,32 @@
     
     <h1>PRODUCTOS</h1>
     {% for producto in productos %}
-        <div class="card" style="width: 18rem;">
-            {% if producto.image  %}
-                <img class="card-img-top" src="{{producto.image.url}}" alt="Card image cap">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{producto.name}}</h5>
-                <h6 class="card-subtitle">${{producto.price}} COP</h6>
-                {% if producto.description  %}
-                    <p class="card-text">{{producto.description}}</p>
-                    {% endif %}
-
-
-                    
-                    
-            </div>
-        </div>
+    <div class="cotenedor-cp">
+      <div class="cardp">
+          <div class="cardp-inner">
+              <div class="cardp-front">
+                  <!-- Contenido de la parte frontal de la tarjeta -->
+                  {% if producto.image  %}
+                    <img class="" src="{{producto.image.url}}" alt="Card image cap">
+                  {% endif %}
+                  <div>
+                      <h5 class="">{{producto.name}}</h5>
+                      <h6 class="">${{producto.price}} COP</h6>
+                      {% if producto.description  %}
+                        <p class="">{{producto.description}}</p>
+                      {% endif %}
+                  </div>
+            
+              </div>
+              <div class="cardp-back">
+                  <!-- Contenido de la parte trasera de la tarjeta -->
+                  <img class="img-productoback" src="{{producto.image.url}}" alt="Card image cap">
+                  <h5 class="title-b">AGREGAR</h5>
+              </div>
+          </div>
+      </div>
+  </div>
     {% endfor %}
+
+
 {% endblock %}
