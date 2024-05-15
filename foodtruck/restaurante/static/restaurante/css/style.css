@@ -42,17 +42,30 @@
   }
 
   /* TARJETAS PRODUCTOS*/
+.contenedor-mayor{
+    display: flex;
+    flex-direction: row; /* Asegura que los hijos se alineen horizontalmente */
+    justify-content: space-between; /* Ajusta según sea necesario */
+    align-items: flex-start; /* Ajusta según sea necesario */
+}
+
+  .contenedor-flex{
+    flex: 3;
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan a la siguiente línea */
+    gap: 20px; /* Espacio entre los elementos */
+    background-color: blue;
+  }
 
   .container-cp{
-    perspective: 1000px;
+    perspective: 100px;
   }
 
   .cardp{
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   
-    width: 100px;
+    width: 300px;
+    height: 200px;
+    position: relative;
+
   }
 
   .cardp-inner {
@@ -60,7 +73,7 @@
     height: 100%;
     position: absolute;
     transform-style: preserve-3d; /* Permite la preservación de los hijos en 3D */
-    transition: transform 0.6s; /* Duración de la animación */
+    transition: transform 0.5s; /* Duración de la animación */
 }
 
 .cardp:hover .cardp-inner {
@@ -88,11 +101,35 @@
     transform: rotateY(180deg); /* Coloca la parte trasera en su posición inicial */
 }
 
-.img-productoback{
+.img-productof{
+    width: 150px; /* Ajusta el tamaño según tus necesidades */
     height: auto;
-    filter: blur(5px);
+}
+
+.img-productoback{
+    width: 150px; /* Ajusta el tamaño según tus necesidades */
+    height: auto;
+    filter: blur(5px)
 }
 
 .title-b{
     text-align: center;
+}
+
+
+/* RESUMEN PEDIDO*/
+
+.lista-productos, .panel-seleccion {
+ 
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.panel-seleccion {
+   
+    width: 600px;
+    margin-left: 20px;
+    background-color:darkgreen
 }

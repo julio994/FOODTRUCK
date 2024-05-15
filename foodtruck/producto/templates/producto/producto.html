@@ -5,14 +5,16 @@
 {% block content %}
     
     <h1>PRODUCTOS</h1>
+
+<div class="contenedor-mayor">
+   <div class="contenedor-flex">
     {% for producto in productos %}
-    <div class="cotenedor-cp">
       <div class="cardp">
           <div class="cardp-inner">
               <div class="cardp-front">
                   <!-- Contenido de la parte frontal de la tarjeta -->
                   {% if producto.image  %}
-                    <img class="" src="{{producto.image.url}}" alt="Card image cap">
+                    <img class="img-productof" src="{{producto.image.url}}" alt="Card image cap">
                   {% endif %}
                   <div>
                       <h5 class="">{{producto.name}}</h5>
@@ -29,9 +31,18 @@
                   <h5 class="title-b">AGREGAR</h5>
               </div>
           </div>
-      </div>
-  </div>
+        </div>
     {% endfor %}
+  </div> 
 
+
+    <div class="panel-seleccion">
+      <h2>Productos Seleccionados</h2>
+      <ul id="productos-seleccionados">
+        <!-- Aquí se mostrarán los productos seleccionados -->
+      </ul>
+    </div>
+
+</div>
 
 {% endblock %}

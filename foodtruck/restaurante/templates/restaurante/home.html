@@ -5,18 +5,15 @@
 {% block content %}
 <h1></h1>
     <ul>
-        <div class="container-r"></div>
+      
             {% for restaurante in rest %}
-            
-        
                 <a href="{% url 'producto_page' restaurante.id %}">
                     <div class="card-r">
                         <img src="{{restaurante.image.url}}" class="card-img" alt="...">
                         <h5 class="title-cr">{{restaurante.name}}</h5>
                     </div>
                 </a>
-            
-       
+
             {% endfor %}
 
         </div>

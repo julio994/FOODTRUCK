@@ -4,5 +4,6 @@ from .models import Producto
 
 def producto(request,id_restaurante):
 
-    lista_productos = Producto.objects.filter(id=id_restaurante)
+    lista_productos = Producto.objects.filter(id_restaurante=id_restaurante)
+    print (lista_productos)
     return render(request, "producto/producto.html",{"productos":lista_productos})
