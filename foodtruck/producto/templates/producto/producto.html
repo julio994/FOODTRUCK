@@ -9,7 +9,7 @@
 <div class="contenedor-mayor">
    <div class="contenedor-flex">
     {% for producto in productos %}
-      <div class="cardp">
+      <div class="cardp" data-id="{{ producto.id }}" data-name="{{ producto.name }}" data-price="{{ producto.price }}" data-description="{{ producto.description }}" data-image="{{ producto.image.url }}" >
           <div class="cardp-inner">
               <div class="cardp-front">
                   <!-- Contenido de la parte frontal de la tarjeta -->
@@ -23,12 +23,18 @@
                         <p class="">{{producto.description}}</p>
                       {% endif %}
                   </div>
-            
+                  
               </div>
               <div class="cardp-back">
                   <!-- Contenido de la parte trasera de la tarjeta -->
                   <img class="img-productoback" src="{{producto.image.url}}" alt="Card image cap">
-                  <h5 class="title-b">AGREGAR</h5>
+                  <div class="product-quantity-section">
+                    <label for="producto-cantidad-{{ producto.id }}">Cantidad:</label>
+                    <input type="number" id="producto-cantidad-{{ producto.id }}" class="producto-cantidad-input" min="1" value="1">
+                  </div>
+                  <button class="boton-agregar-producto">Agregar</button>
+                  <button class="boton-volver-producto">Volver</button>
+                 
               </div>
           </div>
         </div>
@@ -37,12 +43,62 @@
 
 
     <div class="panel-seleccion">
-      <h2>Productos Seleccionados</h2>
+      <h2>PEDIDO</h2>
       <ul id="productos-seleccionados">
         <!-- Aquí se mostrarán los productos seleccionados -->
+        <thead class="tabla-pedido">
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
       </ul>
     </div>
 
+ 
+
 </div>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const flipCardButtons = document.querySelectorAll('.boton-volver-producto');
+    const selectButtons = document.querySelectorAll('.boton-agregar-producto');
+    const selectedProductsContainer = document.getElementById('productos-seleccionados');
+
+    selectButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        const productCard = this.closest('.cardp');
+        const productId = productCard.getAttribute('data-id');
+        const productName = productCard.getAttribute('data-name');
+        const productPrice = productCard.getAttribute('data-price');
+        const productDescription = productCard.getAttribute('data-description');
+        const productImage = productCard.getAttribute('data-image');
+        const quantityInput = productCard.querySelector('.producto-cantidad-input');
+        const quantity = quantityInput.value;
+
+        if (quantity <= 0) return;
+
+        const productItem = document.createElement('li');
+        productItem.innerHTML = `
+          <div class="producto-seleccionado">
+            <div class="selected-product-details">
+
+              <td>${productId}</td>
+              <td>${productName}</td>
+              <td>${productPrice} COP</td>
+              <td>${quantity}</td>
+            </div>
+          </div>
+        `;
+
+        selectedProductsContainer.appendChild(productItem);
+      });
+    });
+  });
+</script>
 
 {% endblock %}
