@@ -150,13 +150,6 @@
   margin-bottom: 10px;
 }
 
-.productos-seleccionados img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 5px;
-}
-
 .selected-product-details h5, .selected-product-details h6, .selected-product-details p {
   margin: 20;
 }
