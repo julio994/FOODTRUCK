@@ -9,170 +9,156 @@
 <div class="contenedor-mayor">
    <div class="contenedor-flex">
     {% for producto in productos %}
-      <div class="cardp" data-id="{{ producto.id }}" data-name="{{ producto.name }}" data-price="{{ producto.price }}" data-description="{{ producto.description }}" data-image="{{ producto.image.url }}" >
+      <div class="cardp" data-id="{{ producto.id }}" data-name="{{ producto.name }}" data-price="{{ producto.price }}" data-description="{{ producto.description }}" data-image="{{ producto.image.url }}">
           <div class="cardp-inner">
               <div class="cardp-front">
-                  <!-- Contenido de la parte frontal de la tarjeta -->
-                  {% if producto.image  %}
-                    <img class="img-productof" src="{{producto.image.url}}" alt="Card image cap">
+                  {% if producto.image %}
+                    <img class="img-productof" src="{{ producto.image.url }}" alt="Card image cap">
                   {% endif %}
                   <div>
-                      <h5 class="">{{producto.name}}</h5>
-                      <h6 class="">${{producto.price}} COP</h6>
-                      {% if producto.description  %}
-                        <p class="">{{producto.description}}</p>
+                      <h5>{{ producto.name }}</h5>
+                      <h6>${{ producto.price }} COP</h6>
+                      {% if producto.description %}
+                        <p>{{ producto.description }}</p>
                       {% endif %}
                   </div>
-                  
               </div>
               <div class="cardp-back">
-                  <!-- Contenido de la parte trasera de la tarjeta -->
-                  <img class="img-productoback" src="{{producto.image.url}}" alt="Card image cap">
-                  <div class="product-quantity-section">
-                    <label for="producto-cantidad-{{ producto.id }}">Cantidad:</label>
-                    <input type="number" id="producto-cantidad-{{ producto.id }}" class="producto-cantidad-input" min="1" value="1">
+                  <img class="img-productoback" src="{{ producto.image.url }}" alt="Card image cap">
+                  <div class="seleccion-producto">
+                    <div class="product-quantity-section">
+                      <label for="producto-cantidad-{{ producto.id }}">Cantidad:</label>
+                      <input type="number" id="producto-cantidad-{{ producto.id }}" class="producto-cantidad-input" min="1" value="1">
+                    </div>
+                    <div class="contenedor-botones">
+                      <button class="boton-agregar-producto">Agregar</button>
+                      <button class="boton-volver-producto">Volver</button>
                   </div>
-                  <button class="boton-agregar-producto">Agregar</button>
-                  <button class="boton-volver-producto">Volver</button>
-                 
+                </div>
               </div>
           </div>
         </div>
     {% endfor %}
   </div> 
 
-
     <div class="panel-seleccion">
       <h2>PEDIDO</h2>
-      <div id="productos-seleccionados">
-        <!-- Aquí se mostrarán los productos seleccionados -->
-        <thead class="tabla-pedido">
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
-          </tr>
-        </thead>
-      </div>
+      <h5>{{ restaurante.name }}</h5>
+
+      <form method="post">
+        {% csrf_token %}
+        {{ pedido_form.as_p }}
+        {{ detalle_pedido_formset.management_form }}
+        
+          <div id="productos-seleccionados">
+            <p>Cliente</p>
+            <p>Restaurante</p>
+            
+            <thead class="tabla-pedido">
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+          </div>
+        
+          <h3>Total: <span id="total-pedido">0</span> COP</h3>
+          <button type="submit">Realizar pedido</button>
+        </form>
     </div>
 
- 
-
-</div>
-
-
-
 <script>
-let diccionario ={
+let diccionario = {};
 
-}
-let diccionarioJSON = localStorage.getItem("miDiccionario");
+document.addEventListener('DOMContentLoaded', function () {
+    let diccionarioJSON = localStorage.getItem("miDiccionario");
 
-// Verificar si hay algo guardado
-if (diccionarioJSON) {
-    // Convertir la cadena JSON a un objeto
-     diccionario = JSON.parse(diccionarioJSON);
+    if (diccionarioJSON) {
+        diccionario = JSON.parse(diccionarioJSON);
+    }
 
-    console.log("Diccionario recuperado:", diccionario);
-} else {
-    console.log("No se encontró ningún diccionario en localStorage");
-    
-}
-
-
-  function eliminarLista() {
-            // Selecciona la lista por su ID
-            let lista = document.getElementById("miLista");
-            
-            // Verifica si el elemento existe antes de intentar eliminarlo
-            if (lista) {
-                lista.remove();
-            }
-        }
-
-
-  document.addEventListener('DOMContentLoaded', function () {
     const flipCardButtons = document.querySelectorAll('.boton-volver-producto');
     const selectButtons = document.querySelectorAll('.boton-agregar-producto');
     const selectedProductsContainer = document.getElementById('productos-seleccionados');
+    const totalPedido = document.getElementById('total-pedido');
 
+    function actualizarListaProductos() {
+        let total = 0;
+        selectedProductsContainer.innerHTML = `
+          <thead class="tabla-pedido">
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+        `;
+        
+        let index = 0;
+        for (let [productoId, productoData] of Object.entries(diccionario)) {
+            let div = document.createElement('div');
+            let subtotal = productoData.quantity * productoData.price;
+            total += subtotal;
 
+            div.innerHTML = `
+                <input type="hidden" name="detallepedido_set-${index}-producto" value="${productoId}">
+                <input type="hidden" name="detallepedido_set-${index}-cantidad" value="${productoData.quantity}">
+                <input type="hidden" name="detallepedido_set-${index}-observaciones" value="sin observaciones">
+                <tr>
+                    <td>${productoId}</td>
+                    <td>${productoData.name}</td>
+                    <td>${productoData.price} COP</td>
+                    <td>${productoData.quantity}</td>
+                    <td>${subtotal} COP</td>
+                </tr>
+            `;
+            selectedProductsContainer.appendChild(div);
+            index++;
+        }
 
+        totalPedido.textContent = total;
 
+        let totalForms = document.createElement('input');
+        totalForms.type = 'hidden';
+        totalForms.name = 'detallepedido_set-TOTAL_FORMS';
+        totalForms.value = index;
+
+        selectedProductsContainer.appendChild(totalForms);
+    }
 
     selectButtons.forEach(button => {
-      button.addEventListener('click', function () {
-        const productCard = this.closest('.cardp');
-        const productId = productCard.getAttribute('data-id');
-        const productName = productCard.getAttribute('data-name');
-        const productPrice = productCard.getAttribute('data-price');
-        const productDescription = productCard.getAttribute('data-description');
-        const productImage = productCard.getAttribute('data-image');
-        const quantityInput = productCard.querySelector('.producto-cantidad-input');
-        const quantity = quantityInput.value;
+        button.addEventListener('click', function () {
+            const productCard = this.closest('.cardp');
+            const productId = productCard.getAttribute('data-id');
+            const productName = productCard.getAttribute('data-name');
+            const productPrice = productCard.getAttribute('data-price');
+            const quantityInput = productCard.querySelector('.producto-cantidad-input');
+            const quantity = parseInt(quantityInput.value, 10);
 
-        if (quantity <= 0) return;
+            if (quantity <= 0) return;
 
-        console.log('EL ID ES:',productId)
+            if (productId in diccionario) {
+                diccionario[productId].quantity += quantity;
+            } else {
+                diccionario[productId] = {
+                    name: productName,
+                    price: parseFloat(productPrice),
+                    quantity: quantity
+                };
+            }
 
-        if (productId in diccionario ){
-          let newQuantity=parseInt( diccionario[productId]["quantity"],10)+parseInt(quantity,10) 
-          console.log('nuevaCantidad ',newQuantity);
-          diccionario[productId]["quantity"]=newQuantity
-        }
-        else{
-          console.log('nuevoProducto ',quantity);
-          diccionario[productId]={
-            "name":productName,
-            "price":productPrice,
-            "quantity":quantity,
-          }
-        }
-        
-        // Convertir el objeto a una cadena JSON
-        let diccionarioJSON = JSON.stringify(diccionario);
-
-        // Guardar la cadena JSON en localStorage
-        localStorage.setItem("miDiccionario", diccionarioJSON);
-
-        eliminarLista()
-
-        const productItem = document.createElement('ul');
-        productItem.id="miLista"
-        
-        for (let [clave, valor] of Object.entries(diccionario)) {
-          console.log("FOR:",clave,valor)
-          let nuevoElemento = document.createElement("li");
-          nuevoElemento.id=clave
-          // Establece el contenido HTML del elemento li como el elemento actual de la lista
-          nuevoElemento.innerHTML =  `
-       
-          <div class="producto-seleccionado">
-            <div class="selected-product-details">
-
-              <td>${clave}</td>
-              <td>${valor["name"]}</td>
-              <td>${valor["price"]} COP</td>
-              <td>${valor["quantity"]}</td>
-            </div>
-          </div>
-         
-        `;
-    
-          // Agrega el elemento li a la lista ul
-          productItem.appendChild(nuevoElemento);
-      
-
-        }
-        selectedProductsContainer.appendChild(productItem);
-
-      });
-      
+            localStorage.setItem("miDiccionario", JSON.stringify(diccionario));
+            actualizarListaProductos();
+        });
     });
-  });
 
-
+    actualizarListaProductos();
+});
 </script>
 
 {% endblock %}

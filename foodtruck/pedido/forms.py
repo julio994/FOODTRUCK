@@ -1,8 +1,11 @@
+# forms.py
 from django import forms
-from .models import DetallePedido
-from .models import Pedido
+from django.forms import inlineformset_factory
+from .models import Pedido, DetallePedido
 
-class DetallePedidoForm(forms.ModelForm):
+class PedidoForm(forms.ModelForm):
     class Meta:
-        model = DetallePedido, Pedido
-        fields = ['pedido', 'producto', 'cantidad', 'observaciones']
+        model = Pedido
+        fields = ['cliente', 'restaurante']
+
+DetallePedidoFormSet = inlineformset_factory(Pedido, DetallePedido, fields=('producto', 'cantidad', 'observaciones'), extra=1, can_delete=True)

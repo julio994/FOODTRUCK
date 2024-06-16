@@ -1,0 +1,181 @@
+
+/* TARJETAS RESTAURANTE*/
+
+.container-cr{
+    display: flex;
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan cuando no caben en una sola fila */
+    gap: 20px; /* Espacio entre las tarjetas */
+    padding: 20px;
+    justify-content: center;
+}
+.card-r{
+  box-sizing: border-box;
+  width: 250px;
+  height: 300px;
+  background: rgba(217, 217, 217, 0.58);
+  border: 1px solid white;
+  box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(6px);
+  border-radius: 17px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-weight: bolder;
+  color: black;
+  margin: 30px; 
+}
+.card-r:hover {
+    border: 1px solid black;
+    transform: scale(1.05);
+  }
+  .card-r:active {
+    transform: scale(0.95) rotateZ(1.7deg);
+  }
+  .title-cr{
+    position: fixed;
+    top: 0;
+  }
+
+  /* TARJETAS PRODUCTOS*/
+.contenedor-mayor{
+    display: flex;
+    flex-direction: row; /* Asegura que los hijos se alineen horizontalmente */
+    justify-content: space-between; /* Ajusta según sea necesario */
+    align-items: flex-start; /* Ajusta según sea necesario */
+}
+
+  .contenedor-flex{
+    flex: 3;
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan a la siguiente línea */
+    gap: 20px; /* Espacio entre los elementos */
+    
+  }
+
+  .container-cp{
+    perspective: 100px;
+  }
+
+  .cardp{
+    width: 300px;
+    height: 200px;
+    position: relative;
+  }
+  
+  .cardp-inner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d; /* Permite la preservación de los hijos en 3D */
+    transition: transform 0.5s; /* Duración de la animación */
+}
+
+.cardp:hover .cardp-inner {
+    transform: rotateY(180deg); /* Gira la tarjeta al pasar el cursor */
+}
+
+.cardp-front, .cardp-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden; /* Oculta la parte trasera cuando se gira */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cardp-front {
+    background-color: #fff;
+}
+
+.cardp-back {
+    transform: rotateY(180deg); /* Coloca la parte trasera en su posición inicial */
+}
+
+.img-productof{
+    width: 150px; /* Ajusta el tamaño según tus necesidades */
+    height: auto;
+}
+.seleccion-producto{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /*background: rgba(0, 0, 0, 0);  Fondo semitransparente para la superposición */
+  
+}
+
+.img-productoback{
+  display: block;
+    width: 60%; /* Ajusta el tamaño según tus necesidades */
+    height: auto;
+    filter: blur(4px)
+}
+.contenedor-botones{
+  display: flex;
+  gap: 10px; /* Espacio entre los botones */
+}
+
+.title-b{
+    text-align: center;
+}
+
+
+/* RESUMEN PEDIDO*/
+
+.lista-productos, .panel-seleccion {
+ 
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+.panel-seleccion {
+  width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+    
+}
+
+.productos-seleccionados {
+  list-style-type: none;
+  padding: 0;
+}
+
+.productos-seleccionados {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.productos-seleccionados img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.selected-product-details h5, .selected-product-details h6, .selected-product-details p {
+  margin: 20;
+  
+}
+.listap{
+  list-style-type: none;
+}
